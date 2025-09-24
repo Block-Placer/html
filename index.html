@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Apple System Font Example</title>
+  <style>
+    /* Use Apple's system font (San Francisco) where available,
+       with good fallbacks for other platforms */
+    :root {
+      --ui-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                  "Helvetica Neue", Arial, sans-serif;
+      --radius: 10px;
+      --accent: #007aff;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: var(--ui-font);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: linear-gradient(180deg,#f7f8fb,#ffffff);
+      color: #0b1220;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 6vh auto;
+      padding: 28px;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 6px 30px rgba(10,20,40,0.06);
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-weight: 600;
+      font-size: 28px;
+      letter-spacing: -0.2px;
+    }
+
+    p.lead {
+      margin: 0 0 18px 0;
+      color: #394455;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 6px 18px rgba(0,122,255,0.16);
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 13px;
+      color: #6b7890;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Using Apple’s System Font</h1>
+    <p class="lead">
+      This page uses the recommended system font stack so Apple devices will display the San Francisco family
+      (the font Apple uses) while other platforms get sensible fallbacks.
+    </p>
+
+    <p>
+      Try viewing this on an iPhone, iPad, or Mac — the text will render with Apple’s native system font there.
+    </p>
+
+    <a class="btn" href="#" onclick="alert('Nice choice!')">Nice!</a>
+
+    <footer>
+      Tip: If you need the exact SF Pro font for branding, you must download it from Apple and host it under a proper license.
+    </footer>
+  </div>
+</body>
+</html>
