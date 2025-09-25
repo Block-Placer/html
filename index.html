@@ -1,154 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>AscendMC</title>
-  <meta name="description" content="Live status and info for AscendMC Minecraft server."/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Server Status</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    :root{
-      --bg1: #f7f8fb;
-      --card: #ffffff;
-      --muted: #5b6470;
-      --accent: #007aff;
-      --radius: 12px;
-      --ui-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #111;
+      color: #eee;
+      text-align: center;
+      padding: 20px;
     }
-    html,body{height:100%;margin:0;font-family:var(--ui-font);-webkit-font-smoothing:antialiased;background:linear-gradient(180deg,var(--bg1),#ffffff);color:#111;}
-    .wrap{max-width:920px;margin:6vh auto;padding:28px;}
-    header{display:flex;align-items:center;gap:18px}
-    .logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,#0ea5ff,#7c3aed);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;box-shadow:0 8px 30px rgba(12,15,30,0.08)}
-    h1{font-size:1.6rem;margin:0}
-    .subtitle{color:var(--muted);margin-top:6px;font-size:0.95rem}
-    .grid{display:grid;grid-template-columns:1fr 340px;gap:20px;margin-top:22px}
-    .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 8px 30px rgba(12,15,30,0.06)}
-    .muted{color:var(--muted);font-size:0.95rem}
-    .ip{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0f1723;color:#fff;padding:6px 10px;border-radius:8px;display:inline-block}
-    .status-line{display:flex;align-items:center;gap:10px;font-weight:600}
-    .status-dot{width:10px;height:10px;border-radius:50%}
-    .online{background:#18b659}
-    .offline{background:#d32f2f}
-    ul.players{list-style:none;padding:0;margin:8px 0 0 0;max-height:180px;overflow:auto}
-    ul.players li{padding:6px 8px;border-radius:8px;background:#f4f6f8;margin-bottom:6px;font-size:0.95rem}
-    .small{font-size:0.88rem;color:var(--muted)}
-    .footer{margin-top:18px;font-size:0.9rem;color:var(--muted)}
-    a.btn{display:inline-block;padding:8px 12px;border-radius:10px;background:var(--accent);color:white;text-decoration:none;font-weight:600}
-    @media (max-width:880px){.grid{grid-template-columns:1fr;}}
+    .status-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    .online { background: #2ecc71; }
+    .offline { background: #e74c3c; }
+    .card {
+      background: #222;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 500px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    .motd { margin: 10px 0; font-style: italic; }
+    .players { list-style: none; padding: 0; margin: 0; }
+    .players li { margin: 4px 0; }
+    .small { font-size: 0.9em; color: #aaa; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="logo">MC</div>
-      <div>
-        <h1>AscendMC</h1>
-        <div class="subtitle"></div>
-      </div>
-    </header>
-
-    <div class="grid">
-      <!-- Left: Main info & live status -->
-      <div class="card">
-        <h2 style="margin-top:0">Server Info</h2>
-        <p class="muted">IP / Hostname</p>
-        <p><span class="ip" id="server-ip">mc.blockservers.net:25565</span></p>
-
-        <p class="muted" style="margin-top:12px">Version</p>
-        <p id="server-version">—</p>
-
-        <div style="margin-top:12px" class="card" id="live-card">
-          <div class="status-line">
-            <div id="status-dot" class="status-dot offline"></div>
-            <div id="status-text">Checking...</div>
-            <div style="margin-left:auto" class="small" id="last-check">—</div>
-          </div>
-
-          <div style="margin-top:12px" id="player-summary" class="small">Players: —</div>
-
-          <div id="players-list" style="margin-top:12px"></div>
-          <div id="motd" class="small" style="margin-top:12px;color:var(--muted)"></div>
-        </div>
-
-        <div style="margin-top:14px;">
-          <a class="btn" href="#" id="refresh-btn">Refresh now</a>
-          <span style="margin-left:12px" class="small">Auto-updates every 30s</span>
-        </div>
-      </div>
-
-      <!-- Right: quick links -->
-      <aside>
-        <div class="card">
-          <h3 style="margin-top:0">Apply to Join</h3>
-          <p class="small"><strong>Application link:</strong> <a href="https://sites.google.com/view/ascendmc/home" target="_blank">Apply to join</a></p>
-        </div>
-      </aside>
+  <h1>Minecraft Server Status</h1>
+  <div class="card">
+    <div id="status">
+      <span id="status-dot" class="status-dot offline"></span>
+      <span id="status-text">Checking...</span>
     </div>
+    <div id="motd" class="motd"></div>
+    <div id="player-summary"></div>
+    <div id="version"></div>
+    <div id="players-list"></div>
   </div>
 
   <script>
-    // =========== CONFIG ===========
-    const SERVER_HOST = "mc.blockservers.net";
-    const SERVER_PORT = 25565;
-    // ==============================
+    const server = "play.example.net"; // CHANGE THIS to your server IP or domain
+    const url = `https://api.mcstatus.io/v2/status/java/${encodeURIComponent(server)}?query=true`;
 
-    const apiBase = "https://api.mcsrvstat.us/2"; 
-    const ipDisplay = document.getElementById("server-ip");
-    const statusText = document.getElementById("status-text");
     const statusDot = document.getElementById("status-dot");
-    const playersListWrap = document.getElementById("players-list");
-    const playerSummary = document.getElementById("player-summary");
+    const statusText = document.getElementById("status-text");
     const motdEl = document.getElementById("motd");
-    const refreshBtn = document.getElementById("refresh-btn");
-    const lastCheck = document.getElementById("last-check");
-    const versionEl = document.getElementById("server-version");
+    const playerSummary = document.getElementById("player-summary");
+    const versionEl = document.getElementById("version");
+    const playersListWrap = document.getElementById("players-list");
 
-    ipDisplay.textContent = SERVER_HOST + (SERVER_PORT !== 25565 ? ":"+SERVER_PORT : "");
-
-    async function fetchStatus(){
-      const target = `${SERVER_HOST}${SERVER_PORT !== 25565 ? ":"+SERVER_PORT : ""}`;
-      const url = `${apiBase}/${encodeURIComponent(target)}`;
-
+    async function fetchStatus() {
       try {
         const res = await fetch(url);
+        if (!res.ok) throw new Error("Bad response");
         const data = await res.json();
         updateUI(data);
       } catch (err) {
-        console.error("Status fetch failed:", err);
-        statusDot.className = "status-dot offline";
-        statusText.textContent = "Error fetching status";
-        lastCheck.textContent = new Date().toLocaleTimeString();
-        playerSummary.textContent = "Players: —";
+        console.error("Fetch error:", err);
+        showOffline();
       }
     }
 
-    function updateUI(data){
-      lastCheck.textContent = new Date().toLocaleTimeString();
-      if(data && data.online){
+    function updateUI(data) {
+      if (data.online) {
         statusDot.className = "status-dot online";
         statusText.textContent = "Online";
-        const online = data.players?.online ?? "—";
+
+        motdEl.textContent = data.motd?.clean ?? "";
+
+        const online = data.players?.online ?? 0;
         const max = data.players?.max ?? "—";
         playerSummary.textContent = `Players: ${online}/${max}`;
-        versionEl.textContent = data.version ?? "—";
-        motdEl.textContent = data.motd?.clean?.join(" ") ?? "";
-        if(data.players?.list?.length){
-          playersListWrap.innerHTML = `<ul class="players">${data.players.list.map(p => `<li>${p}</li>`).join("")}</ul>`;
+
+        versionEl.textContent = `Version: ${data.version?.name_clean ?? "—"}`;
+
+        if (Array.isArray(data.players?.list) && data.players.list.length > 0) {
+          playersListWrap.innerHTML =
+            `<ul class="players">${data.players.list.map(p => `<li>${p.name_clean}</li>`).join("")}</ul>`;
         } else {
-          playersListWrap.innerHTML = `<div class="small" style="color:var(--muted)">Player list hidden</div>`;
+          playersListWrap.innerHTML =
+            `<div class="small">Player list hidden</div>`;
         }
       } else {
-        statusDot.className = "status-dot offline";
-        statusText.textContent = "Offline";
-        playerSummary.textContent = "Players: 0/—";
-        versionEl.textContent = "—";
-        motdEl.textContent = "";
-        playersListWrap.innerHTML = "";
+        showOffline();
       }
     }
 
-    refreshBtn.addEventListener("click", e => { e.preventDefault(); fetchStatus(); });
+    function showOffline() {
+      statusDot.className = "status-dot offline";
+      statusText.textContent = "Offline";
+      motdEl.textContent = "";
+      playerSummary.textContent = "";
+      versionEl.textContent = "";
+      playersListWrap.textContent = "";
+    }
+
     fetchStatus();
-    setInterval(fetchStatus, 30000);
+    setInterval(fetchStatus, 5000); // refresh every 5s
   </script>
 </body>
 </html>
