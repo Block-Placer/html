@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Server Status</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #111;
+      color: #eee;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background: #222;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 500px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    img.widget {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+    .small {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Minecraft Server Status</h1>
+  <div class="card">
+    <!-- mcstatus.io widget image -->
+    <img class="widget" src="https://api.mcstatus.io/v2/status/java/mc.blockservers.net" alt="Server Status">
+    <div class="small">Updates every ~1 minute automatically</div>
+  </div>
+</body>
+</html>
